@@ -45,7 +45,7 @@ def get_token():
 def logOut():
     try:
         # Remove the CACHE file (.cache-test) so that a new user can authorize.
-        os.remove("/Users/ibrahimkhajanchi/Desktop/test/.cache")
+        os.remove("/Users/ibrahimkhajanchi/Desktop/spotify-app/.cache")
         session.clear()
     except OSError as e:
         print ("Error: %s - %s." % (e.filename, e.strerror))
@@ -57,7 +57,7 @@ def home():
 @app.route("/login")
 def login():
     global userOneGo
-    if(os.path.exists("/Users/ibrahimkhajanchi/Desktop/test/.cache")):
+    if(os.path.exists("/Users/ibrahimkhajanchi/Desktop/spotify-app/.cache")):
         userOneGo = 0
         logOut()
     print(userOneGo)
