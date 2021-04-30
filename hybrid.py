@@ -8,8 +8,8 @@ app.secret_key = "jnsdlkfn4389nfe3ubs"
 app.config['SESSION_COOKIE_NAME'] = 'bois cookie'
 
 scope = "user-library-read"
-SPOTIPY_CLIENT_ID = "6aebb34eb7f44d218a6925fb96ffd972"
-SPOTIPY_CLIENT_SECRET = "bb70797d72ea4852adbaf458c7397c9e"
+SPOTIPY_CLIENT_ID = 
+SPOTIPY_CLIENT_SECRET = 
 
 TOKEN_INFO = "token_info"
 TOKEN_INFO2 = "token_info2"
