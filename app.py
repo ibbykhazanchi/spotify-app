@@ -124,7 +124,20 @@ def analyzeData():
     genre_intersection = top_genres1_asSet.intersection(list(top_genres2.keys()))
 
     print(user1.top_artists)
-    print("YO")    
+    print("YO")
+    print(user2.top_artists)
+
+    commonArtist_dict = findCommonDict(top_artists1, top_artists2)
+    commonSongs_dict = findCommonDict(user1.top_tracks, user2.top_tracks)
+
+    commonArtist_dict = dict(sorted(commonArtist_dict.items(), key=lambda item: item[1]))
+    commonSongs_dict = dict(sorted(commonSongs_dict.items(), key=lambda item: item[1]))
+
+    print(commonArtist_dict)
+
+    commonArtist_list = (list) (commonArtist_dict.keys())
+    commonSongs_list = (list) (commonSongs_dict.keys())
+
     
     artist_intersection_tuples = []
     for artist in artist_intersection:
@@ -133,6 +146,15 @@ def analyzeData():
     print(artist_intersection_tuples)
     return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection, genre_intersection = genre_intersection)
     
+    
+def findCommonDict(list1, list2):
+    commonDict = {}
+    for i in range (0, len(list1)):
+        for j in range(0, len(list2)):
+            if(list1[i] == list2[j]):
+                commonDict[list1[i]] = i+j
+    return commonDict
+
 
 @app.route("/getTracks")
 def getTracks():
@@ -145,8 +167,11 @@ def getTracks():
  
     
     sp = spotipy.Spotify(auth=token_info['access_token'])
+    print(sp.me())
     all_artists = []
     all_songs = []
+    songs1 = []
+    songs2 = []
     iter = 0
     while True:
         artists = sp.current_user_top_artists(limit=20, offset=iter*20, time_range="medium_term")['items']
@@ -164,6 +189,7 @@ def getTracks():
     song_list = []
     for item in all_songs:
         song_list.append((item["name"], item["popularity"]))
+    
 
     if userOneGo:
         user1.name = sp.me()['display_name']
@@ -173,6 +199,10 @@ def getTracks():
             user1.profile_pic = sp.me()['images'][0]['url']
         user1.artist_dump = artist_list
         user1.song_dump = song_list
+
+        for song in user1.song_dump:
+            songs1.append(song[0])
+        user1.top_tracks = songs1
         return redirect(url_for("secondUser", _external=False))
     else:
         logOut()
@@ -181,9 +211,14 @@ def getTracks():
             user2.profile_pic = "/static/blank-user.jpg"
         else:
             user2.profile_pic = sp.me()['images'][0]['url']
+            print(user2.profile_pic)
         user2.artist_dump = artist_list
         user2.song_dump = song_list
+        for song in user2.song_dump:
+            songs2.append(song[0])
+        user2.top_tracks = songs2
         return redirect(url_for("analyzeData", __exernal=False))
+
 
 if __name__ == "__main__":
    app.run(debug=True)
