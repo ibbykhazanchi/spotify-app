@@ -60,7 +60,6 @@ def login():
     if(os.path.exists("/Users/ibrahimkhajanchi/Desktop/spotify-app/.cache")):
         userOneGo = 0
         logOut()
-    print(userOneGo)
     sp_oauth = create_spotify_oauth()
     auth_url = sp_oauth.get_authorize_url()
     return redirect(auth_url)
@@ -121,10 +120,14 @@ def analyzeData():
     top_artists1_asSet = set(top_artists1)
     artist_intersection = top_artists1_asSet.intersection(top_artists2)
 
-    top_genres1_asSet = set(user1.top_genres.keys())
-    #genre_intersection = top_genres1_asSet.intersection(top_genres2)
+    top_genres1_asSet = set(list(user1.top_genres.keys()))
+    genre_intersection = top_genres1_asSet.intersection(list(top_genres2.keys()))
+
+    print(user1.top_artists)
+    print("YO")
+    print(user2.top_artists)
     
-    return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection)
+    return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection, genre_intersection = genre_intersection)
     
 
 @app.route("/getTracks")
@@ -138,7 +141,6 @@ def getTracks():
  
     
     sp = spotipy.Spotify(auth=token_info['access_token'])
-    print(sp.me())
     all_artists = []
     all_songs = []
     iter = 0
@@ -153,7 +155,7 @@ def getTracks():
     
     artist_list = []
     for item in all_artists:
-        artist_list.append((item["name"], item["genres"], item["popularity"]))
+        artist_list.append((item["name"], item["genres"], item["popularity"], item['images'][0]['url']))
 
     song_list = []
     for item in all_songs:
@@ -175,14 +177,9 @@ def getTracks():
             user2.profile_pic = "/static/blank-user.jpg"
         else:
             user2.profile_pic = sp.me()['images'][0]['url']
-            print(user2.profile_pic)
         user2.artist_dump = artist_list
         user2.song_dump = song_list
         return redirect(url_for("analyzeData", __exernal=False))
-
-
-    
-
 
 if __name__ == "__main__":
    app.run(debug=True)
