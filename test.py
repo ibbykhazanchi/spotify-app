@@ -6,3 +6,6 @@ list2 = ['Tame Impala', 'Drake', 'Bob Marley & The Wailers', 'Jimi Hendrix', 'Bo
 print((list1.index("Joji") + 1) * (list2.index("Joji") + 1))
 
 print((list1.index("Jack Harlow") + 1) * (list2.index("Jack Harlow") + 1))
+
+tup = ("1", 2)
+print(tup[1])

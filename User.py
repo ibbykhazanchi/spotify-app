@@ -1,5 +1,5 @@
 class User:
-    artist_dump = []
+    artist_dump = {}
     song_dump = []
     top_artists = []
     top_tracks = []

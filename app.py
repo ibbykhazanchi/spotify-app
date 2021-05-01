@@ -93,8 +93,8 @@ def analyzeData():
     top_artists2 = []
     top_genres2 = {}
 
-    for artist in user1.artist_dump:
-        top_artists1.append(artist[0])
+    for artist in user1.artist_dump.keys():
+        top_artists1.append(artist)
 
         for genre in artist[1]:
             if top_genres1.get(genre) != None:
@@ -105,8 +105,8 @@ def analyzeData():
     user1.top_genres = top_genres1
     user1.top_artists = top_artists1
 
-    for artist in user2.artist_dump:
-        top_artists2.append(artist[0])
+    for artist in user2.artist_dump.keys():
+        top_artists2.append(artist)
 
         for genre in artist[1]:
             if top_genres2.get(genre) != None:
@@ -124,9 +124,13 @@ def analyzeData():
     genre_intersection = top_genres1_asSet.intersection(list(top_genres2.keys()))
 
     print(user1.top_artists)
-    print("YO")
-    print(user2.top_artists)
+    print("YO")    
     
+    artist_intersection_tuples = []
+    for artist in artist_intersection:
+        artist_intersection_tuples.append((artist, user1.artist_dump.get(artist)[2]))
+
+    print(artist_intersection_tuples)
     return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection, genre_intersection = genre_intersection)
     
 
@@ -153,9 +157,9 @@ def getTracks():
         if(len(artists) < 20 and len(songs) < 20):
             break
     
-    artist_list = []
+    artist_list = {}
     for item in all_artists:
-        artist_list.append((item["name"], item["genres"], item["popularity"], item['images'][0]['url']))
+        artist_list[item["name"]] = (item["genres"], item["popularity"], item['images'][0]['url'])
 
     song_list = []
     for item in all_songs:
