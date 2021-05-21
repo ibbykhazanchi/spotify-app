@@ -1,6 +1,6 @@
 class User:
     artist_dump = {}
-    song_dump = []
+    song_dump = {}
     top_artists = []
     top_tracks = []
     top_genres = {}

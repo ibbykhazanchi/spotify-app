@@ -5,10 +5,28 @@
     <body>
         <img src = {{url1}} alt = "a picture of {{user1.name}}">
         <img src = {{url2}} alt = "a picture of {{user2.name}}">
-
         <h1> Here are your results, {{user1.name}} & {{user2.name}} !</h1>
-        <p> YOUR COMMON ARTISTS ARE : {{commonArtist_list.__str__()}}  </p>
-        <p> YOUR COMMON GENRES ARE : {{genre_intersection.__str__()}}</p>
-        <p> YOUR COMMON TOP SONGS ARE: {{commonSongs_list.__str__()}}</p>    
-    </body>
+
+        <h2> Here are your top common artists!</h1>
+        {% for artist in intersection %}
+        <img src = {{artist[1]}}>
+        <p>{{artist[0]}}</p>
+        <p># {{artist[2]}} in {{user1.name}}'s top artists!</p>
+        <p># {{artist[3]}} in {{user2.name}}'s top artists!</p>
+
+        {% endfor %}
+
+        <p> YOUR COMMON TRACKS ARE: </p>
+        {% for song in song_intersection %}
+        <figure>
+            <figcaption>{{song[0]}}</figcaption>
+            <audio
+                controls
+                src="{{song[1]}}">
+                    Your browser does not support the
+                    <code>audio</code> element.
+            </audio>
+        </figure>
+        {% endfor %}    
+     </body>
 </html>
