@@ -45,7 +45,7 @@ def get_token():
 def logOut():
     try:
         # Remove the CACHE file (.cache-test) so that a new user can authorize.
-        os.remove("/Users/ibrahimkhajanchi/Desktop/spotify-app/.cache")
+        os.remove("/Users/Sheel/Desktop/spotify-app/.cache")
         session.clear()
     except OSError as e:
         print ("Error: %s - %s." % (e.filename, e.strerror))
@@ -57,7 +57,7 @@ def home():
 @app.route("/login")
 def login():
     global userOneGo
-    if(os.path.exists("/Users/ibrahimkhajanchi/Desktop/spotify-app/.cache")):
+    if(os.path.exists("/Users/Sheel/Desktop/spotify-app/.cache")):
         userOneGo = 0
         logOut()
     sp_oauth = create_spotify_oauth()
@@ -117,34 +117,24 @@ def analyzeData():
     user2.top_genres = top_genres2            
     user2.top_artists = top_artists2
 
-    top_artists1_asSet = set(top_artists1)
-    artist_intersection = top_artists1_asSet.intersection(top_artists2)
-
-    top_genres1_asSet = set(list(user1.top_genres.keys()))
-    genre_intersection = top_genres1_asSet.intersection(list(top_genres2.keys()))
-
-    print(user1.top_artists)
-    print("YO")
-    print(user2.top_artists)
-
     commonArtist_dict = findCommonDict(top_artists1, top_artists2)
     commonSongs_dict = findCommonDict(user1.top_tracks, user2.top_tracks)
 
     commonArtist_dict = dict(sorted(commonArtist_dict.items(), key=lambda item: item[1]))
     commonSongs_dict = dict(sorted(commonSongs_dict.items(), key=lambda item: item[1]))
 
-    print(commonArtist_dict)
-
     commonArtist_list = (list) (commonArtist_dict.keys())
     commonSongs_list = (list) (commonSongs_dict.keys())
 
+    print(commonSongs_list)
+
+    print(commonArtist_dict)
     
     artist_intersection_tuples = []
-    for artist in artist_intersection:
+    for artist in commonArtist_list:
         artist_intersection_tuples.append((artist, user1.artist_dump.get(artist)[2]))
 
-    print(artist_intersection_tuples)
-    return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection, genre_intersection = genre_intersection)
+    return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, commonArtist_list = commonArtist_list, commonSongs_list= commonSongs_list)
     
     
 def findCommonDict(list1, list2):
@@ -167,7 +157,6 @@ def getTracks():
  
     
     sp = spotipy.Spotify(auth=token_info['access_token'])
-    print(sp.me())
     all_artists = []
     all_songs = []
     songs1 = []
