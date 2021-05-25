@@ -130,11 +130,18 @@ def analyzeData():
     for artist in commonArtist_list:
         artist_intersection_tuples.append((artist, user1.artist_dump.get(artist)[2], (user1.top_artists.index(artist) + 1), (user2.top_artists.index(artist)) + 1))
 
-    
+    #truncate list to max 5 items
+    artist_intersection_tuples = artist_intersection_tuples[0:min(len(artist_intersection_tuples), 5)]
+
+
     song_intersection_tuples = []
     for song in commonSongs_list:
         song_intersection_tuples.append((song, user1.song_dump[song][1]))
+
+    #truncate list to max 5 items
+    song_intersection_tuples = song_intersection_tuples[0: min(len(song_intersection_tuples), 5)]
     
+    print(user1.song_dump)
 
     return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection_tuples, song_intersection = song_intersection_tuples)
     
