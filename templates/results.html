@@ -19,7 +19,7 @@
 
         {% endfor %}
 
-        <p> YOUR COMMON TRACKS ARE: </p>
+        <h1> YOUR COMMON TRACKS ARE: </h1>
         {% for song in song_intersection %}
         <figure>
             <figcaption>{{song[0]}}</figcaption>
@@ -32,6 +32,7 @@
         </figure>
         {% endfor %}    
         <br>
+        <h1>Music Compatibility</h1>
         <div class="circular">
           <div class="inner"></div>
           <div class="outer"></div>
