@@ -1,6 +1,9 @@
 <html>
     <head>
         <title> Analysis Page </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     </head>
     <body>
         <img src = {{url1}} alt = "a picture of {{user1.name}}">
@@ -28,5 +31,52 @@
             </audio>
         </figure>
         {% endfor %}    
+        <br>
+        <div class="circular">
+          <div class="inner"></div>
+          <div class="outer"></div>
+          <div class="numb">
+             0%
+          </div>
+          <div class="circle">
+             <div class="bar left">
+                <div class="progress"></div>
+             </div>
+             <div class="bar right">
+                <div class="progress"></div>
+             </div>
+          </div>
+       </div>
+        <script type=text/javascript>
+            var percentage = {{totalPercentage_value}}
+            var totalDegrees = parseInt(360 * (0.01) * percentage);
+            var leftDegrees;
+            var rightDegrees;
+            if(totalDegrees >= 180){
+              leftDegrees = 180;
+              totalDegrees -= 180;
+              rightDegrees = totalDegrees;
+            }
+            else{
+              leftDegrees = totalDegrees;
+              rightDegress = 0;
+            }
+            leftString = "" + leftDegrees + "deg";
+            rightString = "" + rightDegrees + "deg";
+            document.documentElement.style
+                .setProperty('--left', leftString);
+            document.documentElement.style
+                .setProperty('--right', rightString);
+            const numb = document.querySelector(".numb");
+            let counter = 0;
+            setInterval(()=>{
+              if(counter == parseInt(percentage)){
+                clearInterval();
+              }else{
+                counter+=1;
+                numb.textContent = counter + "%";
+              }
+            }, 80);
+         </script>
      </body>
 </html>

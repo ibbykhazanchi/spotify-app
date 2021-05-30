@@ -124,21 +124,31 @@ def analyzeData():
     commonArtist_list = (list) (commonArtist_dict.keys())
     commonSongs_list = (list) (commonSongs_dict.keys())
 
-    print(commonSongs_list)
+    #print(commonSongs_list)
 
-    print(commonArtist_dict)
+    #print(commonArtist_dict)
     
     artist_intersection_tuples = []
     for artist in commonArtist_list:
         artist_intersection_tuples.append((artist, user1.artist_dump.get(artist)[2], (user1.top_artists.index(artist) + 1), (user2.top_artists.index(artist)) + 1))
 
-    
     song_intersection_tuples = []
     for song in commonSongs_list:
         song_intersection_tuples.append((song, user1.song_dump[song][1]))
-    
 
-    return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection_tuples, song_intersection = song_intersection_tuples)
+    artist_avgLen = (len(top_artists1) + len(top_artists2))/2
+    commonArtist_percentage = (len(commonArtist_list))/(artist_avgLen)
+    commonArtist_value = commonArtist_percentage * 70 #artists get 70% weight
+    commonArtist_value = round(commonArtist_value, 2)
+
+    songs_avgLen = (len(user1.top_tracks) + len(user2.top_tracks))/2
+    commonSongs_percentage = (len(commonSongs_list))/(songs_avgLen)
+    commonSongs_value = commonSongs_percentage * 30 #songs get 30% weight
+    commonSongs_value = round(commonSongs_value, 2)
+    
+    totalPercentage_value = commonArtist_value + commonSongs_value
+
+    return render_template('results.html', url1 = user1.profile_pic, url2 = user2.profile_pic, user1 = user1, user2 = user2, intersection = artist_intersection_tuples, song_intersection = song_intersection_tuples, totalPercentage_value = totalPercentage_value)
     
     
 def findCommonDict(list1, list2):
