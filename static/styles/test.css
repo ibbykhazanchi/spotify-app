@@ -1,0 +1,35 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style-position: inside;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.btn-cool {
+    background-color: #00BF18;
+    border: none;
+    color: white;
+    border-radius: 12px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.btn-cool:hover {
+    background-color: gray;
+}
+
+.card-photo {
+    width: 20px;
+}
+
+.profile-pic {
+    margin: auto;    
+    display: block;
+}
+
