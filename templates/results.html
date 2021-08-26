@@ -2,23 +2,52 @@
     <head>
         <title> Analysis Page </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/test.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     </head>
-    <body>
-        <img src = {{url1}} alt = "a picture of {{user1.name}}">
-        <img src = {{url2}} alt = "a picture of {{user2.name}}">
-        <h1> Here are your results, {{user1.name}} & {{user2.name}} !</h1>
+    <body class="bg-dark text-light text-center">
+      <h1 class = "display-1 p-5"> Here are your <span class="text-success"> Spotibility </span> Results </h1>
+      <div class="container">
+        <div class="card-group">
+          <div class="card p-5 bg-dark text-light animate__animated animate__bounceInLeft" style="border: 0;">
+            <img src="{{url1}}" class=" w-75 g-0 card-img-top" alt="..." style="                margin: auto;    
+            display: block;
+            border-radius: 50%;">
+            <div class="card-body text-center">
+              <h1> {{user1.name}} </h1>
+            </div>
+          </div>
+          <div class="card p-5 bg-dark text-light animate__animated animate__bounceInRight" style="border: 0;">
+            <img src="{{url2}}" class=" w-75 g-0 card-img-top" alt="..." style="                margin: auto;    
+            display: block;
+            border-radius: 50%;">
+            <div class="card-body text-center">
+              <h1> {{user2.name}} </h1>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <h2> Here are your top common artists!</h1>
-        {% for artist in intersection %}
-        <img src = {{artist[1]}}>
-        <p>{{artist[0]}}</p>
-        <p># {{artist[2]}} in {{user1.name}}'s top artists!</p>
-        <p># {{artist[3]}} in {{user2.name}}'s top artists!</p>
+      <section class="text-center">
+        <h1 class="p-3"> The artists you two share in common: </h1>
+      </section>
 
-        {% endfor %}
-
+      {% for artist in intersection %}
+      <div class="container">
+        <div class="card bg-success m-4 p-5 pb-0 text-light">
+          <h1 class="card-title">{{artist[0]}}</h1>
+          <img src = {{artist[1]}} class="card-img-top img-fluid">
+          <div class="card-body">
+              <h1 class="card-text"> {{artist[2]}} in {{user1.name}}'s top artists!</h1>
+              <h1 class="card-text">  {{artist[3]}} in {{user2.name}}'s top artists!</h1>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+        
+      <section class="p-5">
         <h1> YOUR COMMON TRACKS ARE: </h1>
         {% for song in song_intersection %}
         <figure>
@@ -30,54 +59,7 @@
                     <code>audio</code> element.
             </audio>
         </figure>
-        {% endfor %}    
-        <br>
-        <h1>Music Compatibility</h1>
-        <div class="circular">
-          <div class="inner"></div>
-          <div class="outer"></div>
-          <div class="numb">
-             0%
-          </div>
-          <div class="circle">
-             <div class="bar left">
-                <div class="progress"></div>
-             </div>
-             <div class="bar right">
-                <div class="progress"></div>
-             </div>
-          </div>
-       </div>
-        <script type=text/javascript>
-            var percentage = {{totalPercentage_value}}
-            var totalDegrees = parseInt(360 * (0.01) * percentage);
-            var leftDegrees;
-            var rightDegrees;
-            if(totalDegrees >= 180){
-              leftDegrees = 180;
-              totalDegrees -= 180;
-              rightDegrees = totalDegrees;
-            }
-            else{
-              leftDegrees = totalDegrees;
-              rightDegress = 0;
-            }
-            leftString = "" + leftDegrees + "deg";
-            rightString = "" + rightDegrees + "deg";
-            document.documentElement.style
-                .setProperty('--left', leftString);
-            document.documentElement.style
-                .setProperty('--right', rightString);
-            const numb = document.querySelector(".numb");
-            let counter = 0;
-            setInterval(()=>{
-              if(counter == parseInt(percentage)){
-                clearInterval();
-              }else{
-                counter+=1;
-                numb.textContent = counter + "%";
-              }
-            }, 80);
-         </script>
+        {% endfor %}   
+      </section> 
      </body>
 </html>
