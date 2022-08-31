@@ -1,0 +1,36 @@
+{
+  "name": "spotify-app",
+  "version": "1.0.0",
+  "description": "Spotify App TS",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "dev": "ts-node-dev --respawn ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibbykhazanchi/spotify-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ibbykhazanchi/spotify-app/issues"
+  },
+  "homepage": "https://github.com/ibbykhazanchi/spotify-app#readme",
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/request": "^2.48.8",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@types/node": "^18.7.13",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "request": "^2.88.2"
+  }
+}
