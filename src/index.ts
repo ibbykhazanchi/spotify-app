@@ -10,8 +10,6 @@ app.use(cors())
    .use(cookieParser())
 const PORT = process.env.PORT || 8888
 
-const client_id = 'f053414153564cd98f1bb34f8ac9a0ca'; // Your client id
-const client_secret = '7ff0b650b83949d2aa43a0df42e48a2e'; // Your secret
 const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 const stateKey = 'spotify_auth_state'
 
